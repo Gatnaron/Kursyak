@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Kursyak.Vertex">
+    <Position X="9.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAYAAAAAACAAAAAAAAAAYAA=</HashCode>
+      <FileName>AllClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kursyak.Edge" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAABAAAACQAAgAgAAIAAAAAAAA=</HashCode>
+      <FileName>AllClass.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Kursyak.GraphObj">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAIAAAAAYAA=</HashCode>
+      <FileName>AllClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kursyak.DrawGraph">
+    <Position X="7.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAAAAAgAIAQCAgABEIIAQBCIAAAAAEAAAEASg=</HashCode>
+      <FileName>AllClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Kursyak.IPrint">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AllClass.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

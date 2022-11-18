@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Kursyak
 {
@@ -22,7 +23,8 @@ namespace Kursyak
         int selected1;
         int selected2;
         public int weight1;
-        public int weight2;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -107,7 +109,7 @@ namespace Kursyak
             {
                 for (int i = 0; i < V.Count; i++)
                 {
-                    if (Math.Pow((V[i].x - e.X), 2) + Math.Pow((V[i].y - e.Y), 2) <= G.R * G.R)
+                    if (Math.Pow((V[i].X - e.X), 2) + Math.Pow((V[i].Y - e.Y), 2) <= G.R * G.R)
                     {
                         if (selected1 != 1)
                         {
@@ -118,7 +120,7 @@ namespace Kursyak
                         }
                         if (selected1 == -1)
                         {
-                            G.drawSelectedVertex(V[i].x, V[i].y);
+                            G.drawSelectedVertex(V[i].X, V[i].Y);
                             selected1 = i;
                             sheet.Image = G.GetBitmap();
                             break;
@@ -132,6 +134,7 @@ namespace Kursyak
             {
                 V.Add(new Vertex(e.X, e.Y));
                 G.drawVertex(e.X, e.Y, V.Count.ToString());
+                G.Points.Add(new Vertex(e.X, e.Y));
                 sheet.Image = G.GetBitmap();
             }
 
@@ -143,22 +146,24 @@ namespace Kursyak
                 {
                     for (int i = 0; i < V.Count; i++)
                     {
-                        if (Math.Pow((V[i].x - e.X), 2) + Math.Pow((V[i].y - e.Y), 2) <= G.R * G.R)
+                        if (Math.Pow((V[i].X - e.X), 2) + Math.Pow((V[i].Y - e.Y), 2) <= G.R * G.R)
                         {
                             if (selected1 == -1)
                             {
-                                G.drawSelectedVertex(V[i].x, V[i].y);
+                                G.drawSelectedVertex(V[i].X, V[i].Y);
                                 selected1 = i;
                                 sheet.Image = G.GetBitmap();
                                 break;
                             }
                             if (selected2 == -1)
                             {
-                                G.drawSelectedVertex(V[i].x, V[i].y);
+                                G.drawSelectedVertex(V[i].X, V[i].Y);
                                 selected2 = i;
                                 Form2 form = new Form2(this);
                                 form.ShowDialog();
-                                E.Add(new Edge(selected1, selected2, weight1));
+                                Edge temp = new Edge(selected1, selected2, weight1);
+                                temp.print();
+                                E.Add(temp);
                                 G.drawEdge(V[selected1], V[selected2], E[E.Count - 1]);
                                 selected1 = -1;
                                 selected2 = -1;
@@ -171,9 +176,9 @@ namespace Kursyak
 
                 if (e.Button == MouseButtons.Right)
                 {
-                    if ((selected1 != -1)&&(Math.Pow((V[selected1].x - e.X), 2) + Math.Pow((V[selected1].y - e.Y), 2) <= G.R * G.R))
+                    if ((selected1 != -1)&&(Math.Pow((V[selected1].X - e.X), 2) + Math.Pow((V[selected1].Y - e.Y), 2) <= G.R * G.R))
                     {
-                        G.drawVertex(V[selected1].x, V[selected1].y, (selected1 + 1).ToString());
+                        G.drawVertex(V[selected1].X, V[selected1].Y, (selected1 + 1).ToString());
                         selected1 = -1;
                         sheet.Image = G.GetBitmap();
                     }
@@ -187,7 +192,7 @@ namespace Kursyak
                 //если вершина
                 for (int i = 0; i < V.Count; i++)
                 {
-                    if (Math.Pow((V[i].x - e.X), 2) + Math.Pow((V[i].y - e.Y), 2) <= G.R * G.R)
+                    if (Math.Pow((V[i].X - e.X), 2) + Math.Pow((V[i].Y - e.Y), 2) <= G.R * G.R)
                     {
                         for (int j = 0; j < E.Count; j++)
                         {
@@ -214,8 +219,8 @@ namespace Kursyak
                     {
                         if (E[i].v1 == E[i].v2) //если петля
                         {
-                            if ((Math.Pow((V[E[i].v1].x - G.R - e.X), 2) + Math.Pow((V[E[i].v1].y - G.R - e.Y), 2) <= ((G.R + 2) * (G.R + 2))) &&
-                                (Math.Pow((V[E[i].v1].x - G.R - e.X), 2) + Math.Pow((V[E[i].v1].y - G.R - e.Y), 2) >= ((G.R - 2) * (G.R - 2))))
+                            if ((Math.Pow((V[E[i].v1].X - G.R - e.X), 2) + Math.Pow((V[E[i].v1].Y - G.R - e.Y), 2) <= ((G.R + 2) * (G.R + 2))) &&
+                                (Math.Pow((V[E[i].v1].X - G.R - e.X), 2) + Math.Pow((V[E[i].v1].Y - G.R - e.Y), 2) >= ((G.R - 2) * (G.R - 2))))
                             {
                                 E.RemoveAt(i);
                                 flag = true;
@@ -224,11 +229,11 @@ namespace Kursyak
                         }
                         else //не петля
                         {
-                            if (((e.X - V[E[i].v1].x) * (V[E[i].v2].y - V[E[i].v1].y) / (V[E[i].v2].x - V[E[i].v1].x) + V[E[i].v1].y) <= (e.Y + 4) &&
-                                ((e.X - V[E[i].v1].x) * (V[E[i].v2].y - V[E[i].v1].y) / (V[E[i].v2].x - V[E[i].v1].x) + V[E[i].v1].y) >= (e.Y - 4))
+                            if (((e.X - V[E[i].v1].X) * (V[E[i].v2].Y - V[E[i].v1].Y) / (V[E[i].v2].X - V[E[i].v1].X) + V[E[i].v1].Y) <= (e.Y + 4) &&
+                                ((e.X - V[E[i].v1].X) * (V[E[i].v2].Y - V[E[i].v1].Y) / (V[E[i].v2].X - V[E[i].v1].X) + V[E[i].v1].Y) >= (e.Y - 4))
                             {
-                                if ((V[E[i].v1].x <= V[E[i].v2].x && V[E[i].v1].x <= e.X && e.X <= V[E[i].v2].x) ||
-                                    (V[E[i].v1].x >= V[E[i].v2].x && V[E[i].v1].x >= e.X && e.X >= V[E[i].v2].x))
+                                if ((V[E[i].v1].X <= V[E[i].v2].X && V[E[i].v1].X <= e.X && e.X <= V[E[i].v2].X) ||
+                                    (V[E[i].v1].X >= V[E[i].v2].X && V[E[i].v1].X >= e.X && e.X >= V[E[i].v2].X))
                                 {
                                     E.RemoveAt(i);
                                     flag = true;
@@ -273,7 +278,10 @@ namespace Kursyak
                             dataGridViewMatrix1.Rows[i].Height = 30;
                             dataGridViewMatrix1.Rows[i].HeaderCell.Value = $"V{i + 1}";
                             dataGridViewMatrix1.Columns[j].HeaderCell.Value = $"V{j + 1}";
-                            dataGridViewMatrix1.Rows[i].Cells[j].Value = AMatrix[i, j];
+                            if (AMatrix[i, j] != 101)
+                                dataGridViewMatrix1.Rows[i].Cells[j].Value = AMatrix[i, j];
+                            else
+                                dataGridViewMatrix1.Rows[i].Cells[j].Value = "∞";
                         }
                     }
                 }
@@ -287,7 +295,7 @@ namespace Kursyak
         private void buttonFW_Click(object sender, EventArgs e)
         {
             FWMatrix = new int[V.Count, V.Count];
-            G.AlgorithmFW(V.Count, E, FWMatrix);
+            //G.AlgorithmFW1(V.Count, E, AMatrix);
             try
             {
                 if (V.Count == 0) throw new Exception("Графа нет");
@@ -299,6 +307,8 @@ namespace Kursyak
                     dataGridViewMatrix2.RowHeadersWidth = 50;
                     dataGridViewMatrix2.ColumnHeadersHeight = 50;
 
+                    FWMatrix =  G.AlgorithmFW1(V.Count, E, AMatrix);
+
                     for (int i = 0; i < V.Count; i++)
                     {
                         for (int j = 0; j < V.Count; j++)
@@ -307,15 +317,112 @@ namespace Kursyak
                             dataGridViewMatrix2.Rows[i].Height = 30;
                             dataGridViewMatrix2.Rows[i].HeaderCell.Value = $"V{i + 1}";
                             dataGridViewMatrix2.Columns[j].HeaderCell.Value = $"V{j + 1}";
+                            //dataGridViewMatrix2.Rows[i].Cells[j].Value = AMatrix[i, j];
                             dataGridViewMatrix2.Rows[i].Cells[j].Value = FWMatrix[i, j];
                         }
                     }
                 }
+                dataGridViewMatrix2.Refresh();
+                dataGridViewMatrix2.Update();
             }
             catch (Exception error)
             { 
                     MessageBox.Show(error.Message, "Ошибка");
                    
+            }
+        }
+
+        public void SaveGraph()
+        {
+            if (true)
+            {
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.Title = "Сохранить граф как...";
+                savedialog.OverwritePrompt = true;
+                savedialog.CheckPathExists = true;
+                savedialog.Filter = "Файл графа (*.xml)|*.xml|Изображение (*.PNG)|*.png";
+
+                if (savedialog.ShowDialog() == DialogResult.OK)
+                {
+                    /*if (savedialog.FileName.EndsWith(".png"))
+                    {
+                        try
+                        {
+                            picture.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                            var dr = MessageBox.Show("Изображение успешно сохранено"
+                                + Environment.NewLine
+                                + "Просмотреть файл?", "Выполнено",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (dr == DialogResult.Yes)
+                                Process.Start(savedialog.FileName);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Невозможно сохранить изображение", "Ошибка!",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }*/
+                    if (savedialog.FileName.EndsWith(".xml"))
+                    {
+                        try
+                        {
+                            G.SaveXML(savedialog.FileName);
+                            var dr = MessageBox.Show("Граф успешно сохраненён", "Выполнено",
+                           MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Невозможно сохранить граф", "Ошибка!",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Невозможно сохранить граф - пустой файл", "Ошибка!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button_save_Click(object sender, EventArgs e)
+        {
+            SaveGraph();
+        }
+
+        private void button_open_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog opf = new OpenFileDialog();
+            opf.Title = "Открыть файл графа...";
+            opf.CheckPathExists = true;
+            opf.Filter = "Файл графа (*.xml)|*.xml";
+
+            if (opf.ShowDialog() == DialogResult.OK)
+            {
+                G.clearSheet();
+                try
+                {
+                    var GrObj = G.OpenXML(opf.FileName);
+                    for (int i = 0; i < GrObj.X.Count; i++)
+                    {
+                        //drawVertex(GrObj.X[i], GrObj.Y[i], (i + 1).ToString());
+                        V.Add(new Vertex(GrObj.X[i], GrObj.Y[i]));
+                        Console.WriteLine(GrObj.X[i] + " " + GrObj.Y[i] + " " + (i + 1).ToString());
+                    }
+                    for (int i = 0; i < GrObj.v1.Count; i++)
+                    {
+                        //drawEdge(this.Points[GrObj.v1[i]], this.Points[GrObj.v2[i]], new Edge(GrObj.v1[i], GrObj.v2[i], GrObj.weight[i]));
+                        E.Add(new Edge(GrObj.v1[i], GrObj.v2[i], GrObj.weight[i]));
+                        Console.WriteLine(GrObj.v1[i] + " " + GrObj.v2[i] + " " + GrObj.weight[i]);
+                    }
+                    G.drawALLGraph(V, E);
+                    sheet.Image = G.GetBitmap();
+                }
+                catch
+                {
+                    MessageBox.Show("Невозможно открыть файл", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

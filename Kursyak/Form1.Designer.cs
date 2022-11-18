@@ -38,6 +38,8 @@
             this.dataGridViewMatrix1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewMatrix2 = new System.Windows.Forms.DataGridView();
             this.buttonFW = new System.Windows.Forms.Button();
+            this.button_save = new System.Windows.Forms.Button();
+            this.button_open = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.sheet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatrix1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatrix2)).BeginInit();
@@ -48,9 +50,9 @@
             this.sheet.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.sheet.BackColor = System.Drawing.Color.Lavender;
             this.sheet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.sheet.Location = new System.Drawing.Point(2, 2);
+            this.sheet.Location = new System.Drawing.Point(2, 42);
             this.sheet.Name = "sheet";
-            this.sheet.Size = new System.Drawing.Size(367, 457);
+            this.sheet.Size = new System.Drawing.Size(367, 417);
             this.sheet.TabIndex = 0;
             this.sheet.TabStop = false;
             this.sheet.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sheet_MouseClick);
@@ -164,12 +166,36 @@
             this.buttonFW.UseVisualStyleBackColor = true;
             this.buttonFW.Click += new System.EventHandler(this.buttonFW_Click);
             // 
+            // button_save
+            // 
+            this.button_save.Location = new System.Drawing.Point(2, 4);
+            this.button_save.Margin = new System.Windows.Forms.Padding(4);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(143, 31);
+            this.button_save.TabIndex = 20;
+            this.button_save.Text = "Сохранить";
+            this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
+            // 
+            // button_open
+            // 
+            this.button_open.Location = new System.Drawing.Point(226, 4);
+            this.button_open.Margin = new System.Windows.Forms.Padding(4);
+            this.button_open.Name = "button_open";
+            this.button_open.Size = new System.Drawing.Size(143, 31);
+            this.button_open.TabIndex = 21;
+            this.button_open.Text = "Открыть";
+            this.button_open.UseVisualStyleBackColor = true;
+            this.button_open.Click += new System.EventHandler(this.button_open_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(811, 513);
+            this.Controls.Add(this.button_open);
+            this.Controls.Add(this.button_save);
             this.Controls.Add(this.buttonFW);
             this.Controls.Add(this.dataGridViewMatrix2);
             this.Controls.Add(this.dataGridViewMatrix1);
@@ -203,6 +229,8 @@
         private System.Windows.Forms.DataGridView dataGridViewMatrix1;
         private System.Windows.Forms.DataGridView dataGridViewMatrix2;
         private System.Windows.Forms.Button buttonFW;
+        private System.Windows.Forms.Button button_save;
+        private System.Windows.Forms.Button button_open;
     }
 }
 
